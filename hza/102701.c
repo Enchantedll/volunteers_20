@@ -1,13 +1,13 @@
 #include<stdio.h>
 
-int n, m, k, j;
+int n, m, k, j;//global variable
 int main()
 {
     printf("Enter n, m, k\n");
     scanf("%d%d%d",&n, &m, &k );
     int num[n];
 
-    for(int i=0;i<n;i++)
+    for(int i=0;i<n;i++)//简化
         num[i] = i+1;
 
     if(m+k-1<n)
