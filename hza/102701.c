@@ -1,14 +1,14 @@
 #include<stdio.h>
 
+int n, m, k, j;
 int main()
 {
-    int n, m, k, j;
     printf("Enter n, m, k\n");
     scanf("%d%d%d",&n, &m, &k );
     int num[n];
 
-    for(int i=0,j=1;i<n;i++,j++)
-        num[i] = j;
+    for(int i=0;i<n;i++)
+        num[i] = i+1;
 
     if(m+k-1<n)
         j = m+k-1;
