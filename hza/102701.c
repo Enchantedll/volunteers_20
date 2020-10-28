@@ -1,12 +1,13 @@
 #include<stdio.h>
 
 int n, m, k, j;//global variable
+int num[10000];//n<1e4
+
 int main()
 {
     printf("Enter n, m, k\n");
     scanf("%d%d%d",&n, &m, &k );
-    int num[10000];//n<1e4
-
+    
     for(int i=0;i<n;i++)//简化
         num[i] = i+1;
 
