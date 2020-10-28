@@ -1,33 +1,26 @@
 ```C++
 #include<iostream>
-int main()
-{
-  int n,m,k;
-  cin>>n>>m>>k;
-  int a[n];
-  for(int i=0;i<=n-1;i++){
-    a[i]=i+1;
-  }
-  int cul=m,ans=0;
-  while(true){
-    if(m==n+1){
-      m=1;continue;
-    }
-    else if(a[m-1]==0){
-      m++;continue;
-    }
-    else if(cul<k){
-      cul++;m++;
-    }
-    else if(cul==k){
-      cul=1;ans++;cout<<a[m-1]<<" ";
-      a[m-1]=0;continue;
-    }
-    else if(ans==n){
-      break;
-    }
-  }
-}  
+#include<cstring>
+using namespace std;
+int a[10000];
+int main(){
+	memset(a,1,sizeof(a));
+	int n=0,m=0,k=0;
+	cin>>n>>m>>k;int i=m,cul=1,ans=0;
+	while(true){
+		if(a[i]==0){
+			i++;continue;
+		}
+		else if(i==n+1)i=1; 
+		else if(cul<k){
+			i++;cul++;continue;
+		}
+		else if(cul==k){
+			a[i]=0;cout<<i<<' ';cul=1;ans++;continue;
+		}
+		else if(ans==n)break;
+	}
+}
 ```
 
 约瑟夫环
