@@ -1,7 +1,6 @@
 #include<stdio.h>
 
-int n, m, k, j;//global variable
-int num[10000];//n<1e4
+int n, m, k, j， num[10000];//global variable
 
 int main()
 {
