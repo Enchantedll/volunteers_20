@@ -1,0 +1,57 @@
+git
+1、分布式版本控制，无中央服务器，无需联网，安全性高。
+2、命令
+一、创建版本库
+1）pwd显示当前目录
+2）git init将该目录变为git可管理目录 [初始化git仓库]
+3）ls-ah 显示隐藏目录
+4)git add~~将文件添加到仓库，
+git commit -m"  ~"将文件提交到仓库。
+二、
+1）git status 查看当前状态
+2）git diff 查看修改
+三、版本回退
+1）git log  (--pretty=online)查看提交日志
+2）git reset --hard~~版本回退
+3）git relog 查找历史命令
+四、工作区
+版本库—（暂存区，分支，指针）
+五、关于修改
+1）git add  将修改放入暂存区，git commit ~将暂存区修改提交
+2）git  checkout -- ~丢弃工作区修改
+3）git  reset  HEAD ~ +2）丢弃暂存区修改
+4）git rm ~ ,git commitcommit -m ~删除文件
+5） git  checkout--~误删，将版本库版本替换到工作区版本
+六、远程库
+1）git  remote add origin git @github.com[guthub账户名]/～
+关联本地账户与远程库
+2）git push -u origin master 推送本地分支内容到远程分支并关联
+3）git  clone git@git库地址，克隆远程库
+七、分支管理
+1）git checkout -b ~创建并切换分支git switch -c
+2）git branch 查看当前分支。      修改提交
+3）git checkout master。git switch
+4)git merge ~合并分支
+5)git branch -d删除分支
+6）解决冲突git log -- graph查看分支合并图
+7）git merge --no-ff~ 保留合并分支历史
+8）bug分支 
+git stash保存工作现场，确定修复bug所在分支并切换，创建并切换临时分支，修复提交~
+git stash pop恢复工作现场并删除stash内容
+git   cherry-pick~复制修改
+9）feature分支
+git branch -D~强行删除没有合并过的分支
+10）多人协作
+git remote -v查看远程信息
+git push origin ~推送分支
+（推送失败）git branch 本地分支与远程分支的链接
+git pull 抓取分支，解决冲突，推送
+11）git rebase将本地未推送的分叉提交历史整理成直线更直观，但会修改本地的分叉提交
+八、标签
+1）切换到要打标签分支
+2）git tag<name>打标签
+3）git tag查看所有标签
+4）git show<~>查看标签内容
+5）git tag -d~删除标签
+6）git push origin~推送远程标签
+7）git tag -d ~  git push origin:/tags/~  删除远程标准
