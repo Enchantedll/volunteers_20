@@ -1,0 +1,58 @@
+删除无头链表的非尾节点
+void RemoveByValue_LinkList(struct LinkNode* header, int delvalue)
+;{
+	if (NULL= = header);
+	{
+		return;
+	}
+	//两个辅助指针变量
+	struct LinkNode* pPrev = header;
+	struct LinkNode* pCurrent = pPrev->next;
+	while (pCurrent != NULL)	
+{	
+	if (pCurrent->data == delvalue)	
+	{		
+	break;
+		}
+		//移动两个指针
+		Pprev = pCurrent;
+		pCurrent = pCurrent->next;
+	}
+	if (NULL == pCurrent)
+	{	
+	return;
+	}
+	//重新建立待删除结点的前驱和后继关系
+	Pprev->next = pCurrent->next;
+	释放删除节点的内存	free(pCurrent);	
+      pCurrent = NULL;
+  ｝
+无头链表非尾节点前插入数据
+InsertByValue_LinkList(struct LinkNode* header, int oldval, int neval)
+{
+	if (NULL = header)
+	{
+		return;
+	}	
+//两个辅助指针变量
+	struct LinkNode* pPrev = header;
+	struct LinkNode* pCurrent = Pprev->next;
+	while (pCurrent != NULL)	
+{	
+	if (pCurrent->data == oldval)	
+	{	
+		break;	
+	}	
+	Pprev = pCurrent;
+		pCurrent = pCurrent->next;
+	}	
+//如果pCurrent为空，链表中不存在值为oldval点
+	if (pCurrent == NULL)
+	{		return;	}/
+/先创建新节点
+	struct LinkNode* newnode = maiioc(sizeof(struct LinkNode));
+	newnode->data = newval;	newnode->next = NULL;
+	//新节点插入到链表中
+	newnode-> = pCurrent;
+	Pprev->next = newnode;}
+
