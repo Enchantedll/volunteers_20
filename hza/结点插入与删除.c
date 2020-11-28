@@ -80,7 +80,7 @@ struct stud_node *InsertDoc (struct stud_node *head,struct stud_node *stud) //�
     else{
         while((ptr->num>ptr2->num) && (ptr2->next!=NULL)){
             ptr1 = ptr2;
-            ptr2 = ptr->next;
+            ptr2 = ptr2->next;
         }
         if (ptr->num<=ptr2->num){//p1,p2之间插入结点
             if(head==ptr2) head = ptr;
