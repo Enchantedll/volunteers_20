@@ -1,0 +1,30 @@
+结构体；(struct)
+共同体(union)
+struct
+{int date;
+union categ category;}person[2];
+union catey
+{int a;
+charb[10];};
+静态链表，动态链表
+创造列表，删除节点，插入节点，修改节点，逆序。
+ 枚举enum 枚举变量{枚举元素(枚举常量)}枚举变量；
+枚举常量未初始化自动赋值0,1,2,3……
+typedef声明新类变量 与#define的区别
+文件类型指针:
+头文件中包含typedf{…
+                  …}FILE;
+FILE*fp;
+打开文件与关闭文件
+fopen(文件名，使用文件的方式);
+使用文件的方式 r w a rb wb ab r+ w+ a+ rb+ wb+ ab+;
+加个b表示对应的二进制文件
+fclose(文件指针)
+fgetc fputc 字符
+文件尾标志用标识符EOF,EOF在stdio.h中被定义-1。用feof函数检测文件尾标志是否已被读过。读，为真，1；反之，0。
+fgets fputs 字符串
+fprintf(文件指针，格式字符串，输出表列) fscanf
+用二进制方式向文件读写一组数据fread(buffer,size,count,fp) fwrite
+文件位置标记的定位:rewind，改变文件位置标记:fseek(文件类型指针，位移量，起始点)
+文件开始位置SEEK_SET 文件当前位置SEEK_CUR 文件末尾位置SEEK_END
+ferror出错检查，clearerr使文件出错标志和文件结束标志置为0。
