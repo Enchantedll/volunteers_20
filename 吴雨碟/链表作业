@@ -1,0 +1,139 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define CRT_SECURE_NO_WARNINGS
+//创建一个链表
+typedef struct link {
+	int date;
+	struct link *next;
+}linklist;
+linklist *head=NULL,*node,*end;//定义头节点，普通节点，尾节点
+linklist*head = (linklist*)malloc(sizeof(linklist));
+linklist*creat(int n)
+{
+	for (int i = 0;i < n;i++) {
+		node = (linklist*)malloc(sizeof(linklist));
+		scanf("%d", &node->date);
+		end->next = node;
+		end = node;
+	}
+	end->next = NULL;
+	return head;
+}
+//删除一个无头单链表的非结尾点（不能遍历链表）
+void deletenode(linklist*p)
+{
+	if (p != NULL)
+	{
+		linklist* pr = p->next;
+		p->date = pr->date;
+		p->next = pr->next;
+		free(pr);
+		pr->next = NULL;
+	}
+	else printf("节点不存在！\n");
+}
+//在一个无头单链表的一个节点前插入一个节点（不能遍历链表）
+void insertnode(linklist*p)
+{
+	linklist*newnode = p->next;
+	if (p != NULL)
+	{
+		newnode->date = p->date;
+		scanf("%d", &p->date);
+		newnode->next = p->next;
+		p->next = newnode;
+	}
+	else printf("节点不存在！\n");
+#include<stdio.h>
+#include<stdlib.h>
+#define CRT_SECURE_NO_WARNINGS
+//创建一个链表
+typedef struct link {
+	int date;
+	struct link *next;
+}linklist;
+linklist *head=NULL,*node,*end;//定义头节点，普通节点，尾节点
+linklist*head = (linklist*)malloc(sizeof(linklist));
+linklist*creat(int n)
+{
+	for (int i = 0;i < n;i++) {
+		node = (linklist*)malloc(sizeof(linklist));
+		scanf("%d", &node->date);
+		end->next = node;
+		end = node;
+	}
+	end->next = NULL;
+	return head;
+}
+//删除一个无头单链表的非结尾点（不能遍历链表）
+void deletenode(linklist*p)
+{
+	if (p != NULL)
+	{
+		linklist* pr = p->next;
+		p->date = pr->date;
+		p->next = pr->next;
+		free(pr);
+		pr->next = NULL;
+	}
+	else printf("节点不存在！\n");
+}
+//在一个无头单链表的一个节点前插入一个节点（不能遍历链表）
+void insertnode(linklist*p)
+{
+	linklist*newnode = p->next;
+	if (p != NULL)
+	{
+		newnode->date = p->date;
+		scanf("%d", &p->date);
+		newnode->next = p->next;
+		p->next = newnode;
+	}
+	else printf("节点不存在！\n");
+#include<stdio.h>
+#include<stdlib.h>
+#define CRT_SECURE_NO_WARNINGS
+//创建一个链表
+typedef struct link {
+	int date;
+	struct link *next;
+}linklist;
+linklist *head=NULL,*node,*end;//定义头节点，普通节点，尾节点
+linklist*head = (linklist*)malloc(sizeof(linklist));
+linklist*creat(int n)
+{
+	for (int i = 0;i < n;i++) {
+		node = (linklist*)malloc(sizeof(linklist));
+		scanf("%d", &node->date);
+		end->next = node;
+		end = node;
+	}
+	end->next = NULL;
+	return head;
+}
+//删除一个无头单链表的非结尾点（不能遍历链表）
+void deletenode(linklist*p)
+{
+	if (p != NULL)
+	{
+		linklist* pr = p->next;
+		p->date = pr->date;
+		p->next = pr->next;
+		free(pr);
+		pr->next = NULL;
+	}
+	else printf("节点不存在！\n");
+}
+//在一个无头单链表的一个节点前插入一个节点（不能遍历链表）
+void insertnode(linklist*p)
+{
+	linklist*newnode = p->next;
+	if (p != NULL)
+	{
+		newnode->date = p->date;
+		scanf("%d", &p->date);
+		newnode->next = p->next;
+		p->next = newnode;
+	}
+	else printf("节点不存在！\n");
+}
