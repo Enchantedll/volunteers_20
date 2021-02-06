@@ -1,0 +1,38 @@
+﻿  billing_file.c
+d:\college\c\0206\大作业\大作业\billing_file.c(143): warning C4129: “%”: 不可识别的字符转义序列
+  billing_service.c
+  cardfile.c
+  card_service.c
+  menu.c
+  service.c
+d:\college\c\0206\大作业\大作业\service.c(31): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(31): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(67): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(67): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(162): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(162): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(243): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+d:\college\c\0206\大作业\大作业\service.c(259): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(259): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(293): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(293): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(330): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(330): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(374): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(374): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(396): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(396): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(418): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(418): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(422): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(422): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(486): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(486): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(505): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\service.c(505): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+  tool.c
+  main.c
+d:\college\c\0206\大作业\大作业\main.c(20): warning C4566: 由通用字符名称“\u200E”表示的字符不能在当前代码页(936)中表示出来
+d:\college\c\0206\大作业\大作业\main.c(20): warning C4566: 由通用字符名称“\u2068”表示的字符不能在当前代码页(936)中表示出来
+  正在生成代码...
+  大作业.vcxproj -> D:\college\C\0206\大作业\Debug\大作业.exe
