@@ -4,6 +4,7 @@
 int main()
 {
 	int i,soon;              //标志位
+	int c;					 //getchar的返回值
 	char ele;                //选择
 	Node1* uhead;            //用户数据链表头指针
 	Node1* uend;             //用户数据链表尾指针
@@ -31,14 +32,14 @@ int main()
 	Current2 = NULL;
 	
 	//打开用户数据文件
-	if ((fp1 = fopen("users'data", "r")) == NULL)
+	if ((fp1 = fopen("users'data.md", "r")) == NULL)
 	{
 		printf("打开文件失败\n");
 		exit(EXIT_FAILURE);
 	}
 
 	//打开历史记录文件
-	if ((fp2 = fopen("using log", "r")) == NULL)
+	if ((fp2 = fopen("using log.md", "r")) == NULL)
 	{
 		printf("打开文件失败\n");
 		exit(EXIT_FAILURE);
@@ -46,11 +47,19 @@ int main()
 
 	//创建用户数据链表
 	uhead = (Node1*)malloc(sizeof(Node1));
-	if ((fscanf(fp1, "%18s %8s %d %ld %ld %f %ld %d %f %d", uhead->data->aName, uhead->data->aPwd, uhead->data->nStatus, uhead->data->tStart, uhead->data->tEnd, uhead->data->fTotalUse, uhead->data->tLast, uhead->data->nUseCount, uhead->data->fBalance, uhead->data->nDel)) != EOF)
+	uhead->data = (sUser*)malloc(sizeof(sUser));
+	if ((fscanf(fp1, "%18s %8s %d %lld %lld %f %lld %d %f %d", 
+		uhead->data->aName, uhead->data->aPwd, &(uhead->data->nStatus), &(uhead->data->tStart), 
+		&(uhead->data->tEnd), &(uhead->data->fTotalUse), &(uhead->data->tLast), &(uhead->data->nUseCount), 
+		&(uhead->data->fBalance), &(uhead->data->nDel))) != EOF)
 	{
 		uhead->next = NULL;
 		current1 = (Node1*)malloc(sizeof(Node1));
-		while ((fscanf(fp1, "%18s %8s %d %ld %ld %f %ld %d %f %d", current1->data->aName, current1->data->aPwd, current1->data->nStatus, current1->data->tStart, current1->data->tEnd, current1->data->fTotalUse, current1->data->tLast, current1->data->nUseCount, current1->data->fBalance, current1->data->nDel)) != EOF)
+		current1->data = (sUser*)malloc(sizeof(sUser));
+		while ((fscanf(fp1, "%18s %8s %d %lld %lld %f %lld %d %f %d",
+			current1->data->aName, current1->data->aPwd, &(current1->data->nStatus), &(current1->data->tStart),
+			&(current1->data->tEnd), &(current1->data->fTotalUse), &(current1->data->tLast), &(current1->data->nUseCount), 
+			&(current1->data->fBalance), &(current1->data->nDel))) != EOF)
 		{
 			if (uhead->next == NULL)
 			{
@@ -58,6 +67,7 @@ int main()
 				current2 = current1;
 				current1->next = NULL;
 				current1 = (Node1*)malloc(sizeof(Node1));
+				current1->data = (sUser*)malloc(sizeof(sUser));
 			}
 			else
 			{
@@ -65,9 +75,19 @@ int main()
 				current1->next = NULL;
 				current2 = current1;
 				current1 = (Node1*)malloc(sizeof(Node1));
+				current1->data = (sUser*)malloc(sizeof(sUser));
 			}
 		}
-		uend = current2;
+
+		if (uhead->next != NULL)
+		{
+			uend = current2;
+		}
+		else
+		{
+			uend = uhead;
+		}
+		free(current1->data);
 		free(current1);
 	}
 	else
@@ -78,28 +98,69 @@ int main()
 
 	//创建历史记录链表
 	lhead = (Node2*)malloc(sizeof(Node2));
-	if ((fscanf(fp2, "%18s %d %ld %ld %ld", lhead->data->bName, lhead->data->Kind, lhead->data->Re, lhead->data->Af, lhead->data->tEnd)) != EOF)
+	lhead->data = (lUser*)malloc(sizeof(lUser));
+	if ((fscanf(fp2, "%18s %d %f %f %lld", lhead->data->bName, 
+		&(lhead->data->Kind), &(lhead->data->Re), &(lhead->data->Af), 
+		&(lhead->data->tEnd))) != EOF)
 	{
 		lhead->next = NULL;
 		Current1 = (Node2*)malloc(sizeof(Node2));
-		while ((fscanf(fp2, "%18s %d %ld %ld %ld", Current1->data->bName, Current1->data->Kind, Current1->data->Re, Current1->data->Af, Current1->data->tEnd)) != EOF)
+		Current1->data = (lUser*)malloc(sizeof(lUser));
+		if (Current1->data != NULL)
 		{
-			if (lhead->next == NULL)
+			while ((fscanf(fp2, "%18s %d %f %f %lld", Current1->data->bName,
+				&(Current1->data->Kind), &(Current1->data->Re), &(Current1->data->Af),
+				&(Current1->data->tEnd))) != EOF)
 			{
-				lhead->next = Current1;
-				Current2 = Current1;
-				Current1->next = NULL;
-				Current1 = (Node2*)malloc(sizeof(Node2));
-			}
-			else
-			{
-				Current2->next = Current1;
-				Current1->next = NULL;
-				Current2 = Current1;
-				Current1 = (Node2*)malloc(sizeof(Node2));
+				if (lhead->next == NULL)
+				{
+					lhead->next = Current1;
+					Current2 = Current1;
+					Current1->next = NULL;
+					Current1 = (Node2*)malloc(sizeof(Node2));
+					if (Current1 != NULL)
+					{
+						Current1->data = (lUser*)malloc(sizeof(lUser));
+					}
+					else
+					{
+						printf("内存申请失败\n");
+						exit(EXIT_FAILURE);
+					}
+				}
+				else
+				{
+					Current2->next = Current1;
+					Current1->next = NULL;
+					Current2 = Current1;
+					Current1 = (Node2*)malloc(sizeof(Node2));
+					if (Current1 != NULL)
+					{
+						Current1->data = (lUser*)malloc(sizeof(lUser));
+					}
+					else
+					{
+						printf("内存申请失败\n");
+						exit(EXIT_FAILURE);
+					}
+				}
 			}
 		}
-		lend = Current2;
+		else
+		{
+			free(Current1);
+			printf("内存申请失败\n");
+			exit(EXIT_FAILURE);
+		}
+		if (lhead != NULL)
+		{
+			lend = Current2;
+		}
+		else
+		{
+			lend = lhead;
+		}
+		free(Current1->data);
 		free(Current1);
 	}
 	else
@@ -110,14 +171,22 @@ int main()
 
 	//初始菜单选择
 	do {
+		ele = '0';
 		menu1();
-		scanf("%c", &ele);
+		if ((scanf("%c", &ele)) != 1)
+		{
+			do {
+				printf("系统错误，请重新输入选择：");
+			} while ((scanf("%c", &ele)) != 1);
+		}
+		else;
+		while ((c = getchar()) != '\n' && c != EOF);
 		if (ele <= '4' && ele >= '1')
 		{
 			switch (ele)
 			{
 			case '1':
-				adduser(uhead, uend);
+				adduser((&uhead), (&uend));
 				break;
 			case '2':
 				inquire(uhead);
@@ -133,7 +202,12 @@ int main()
 			if (soon)
 			{
 				printf("是否继续使用（是=1，否=0）:");
-				scanf("%d", &i);
+				if ((scanf("%d", &i)) != 1)
+				{
+					do {
+						printf("系统错误，请重新输入选择：");
+					} while ((scanf("%d", &i)) != 1);
+				}
 			}
 			else
 			{
@@ -145,6 +219,7 @@ int main()
 			printf("无对应的功能模块，请重新登入系统！");
 			i = false;
 		}
+		while ((c = getchar()) != '\n' && c != EOF);
 	}while (on==NULL && i==1);
 
 	soon = 1;//重复使用快捷标签
@@ -153,8 +228,16 @@ int main()
 	if (on != NULL)
 	{
 		do {
+			ele = '0';
 			menu2();
-			scanf("%c", &ele);
+			if ((scanf("%c", &ele)) != 1)
+			{
+				do {
+					printf("系统错误，请重新输入选择：");
+				} while ((scanf("%c", &ele)) != 1);
+			}
+			else;
+			while ((c = getchar()) != '\n' && c != EOF);
 			if (ele <= '5' && ele >= '1')
 			{
 				switch (ele)
@@ -179,7 +262,12 @@ int main()
 				if (soon)
 				{
 					printf("是否继续使用（是=1，否=0）:");
-					scanf("%d", &i);
+					if ((scanf("%d", &i)) != 1)
+					{
+						do {
+							printf("系统错误，请重新输入选择：");
+						} while ((scanf("%d", &i)) != 1);
+					}
 					if (i == 0)
 					{
 						on->data->tLast = time(NULL);
@@ -193,23 +281,24 @@ int main()
 					i = false;
 				}
 			}
+			while ((c = getchar()) != '\n' && c != EOF);
 		} while (i);
 	}
 
 	//关闭文件
-	if (fclose("users'data") != 0)
+	if (fclose(fp1) != 0)
 		printf("关闭文件\"users'data\"时出现问题!\n");
-	if (fclose("using log") != 0)
+	if (fclose(fp2) != 0)
 		printf("关闭文件\"using log\"时出现问题!\n");
 
 	//重新打开文件
-	if ((fp1 = fopen("users'data", "w")) == NULL)
+	if ((fp1 = fopen("users'data.md", "w")) == NULL)
 	{
 		printf("打开文件失败\n");
 		exit(EXIT_FAILURE);
 	}
 
-	if ((fp2 = fopen("using log", "w")) == NULL)
+	if ((fp2 = fopen("using log.md", "w")) == NULL)
 	{
 		printf("打开文件失败\n");
 		exit(EXIT_FAILURE);
@@ -217,34 +306,65 @@ int main()
 
 	//将新数据写入文件
 	current1 = uhead;
-	if (uhead->next != NULL)
+	if (uhead->data != NULL)
 	{
-		do{
-			fprintf(fp1, "%18s %8s %d %ld %ld %f %ld %d %f %d", current1->data->aName, current1->data->aPwd, current1->data->nStatus, current1->data->tStart, current1->data->tEnd, current1->data->fTotalUse, current1->data->tLast, current1->data->nUseCount, current1->data->fBalance, current1->data->nDel);
-			current2 = current1->next ;
-			free(current1);
-			current1 = current2;
-		} while (current1 != NULL);
+		if (uhead->next != NULL)
+		{
+			do {
+				fprintf(fp1, "%18s %8s %d %lld %lld %f %lld %d %f %d",
+					current1->data->aName, current1->data->aPwd, current1->data->nStatus, current1->data->tStart,
+					current1->data->tEnd, current1->data->fTotalUse, current1->data->tLast, current1->data->nUseCount,
+					current1->data->fBalance, current1->data->nDel);
+				current2 = current1->next;
+				free(current1->data);
+				free(current1);
+				current1 = current2;
+			} while (current1 != NULL);
+		}
+		else
+		{
+			fprintf(fp1, "%18s %8s %d %lld %lld %f %lld %d %f %d",
+				uhead->data->aName, uhead->data->aPwd, uhead->data->nStatus, uhead->data->tStart,
+				uhead->data->tEnd, uhead->data->fTotalUse, uhead->data->tLast, uhead->data->nUseCount,
+				uhead->data->fBalance, uhead->data->nDel);
+			free(uhead->data);
+			free(uhead);
+		}
+
 	}
 	else
 	{
-		fprintf(fp1, "%18s %8s %d %ld %ld %f %ld %d %f %d", uhead->data->aName, uhead->data->aPwd, uhead->data->nStatus, uhead->data->tStart, uhead->data->tEnd, uhead->data->fTotalUse, uhead->data->tLast, uhead->data->nUseCount, uhead->data->fBalance, uhead->data->nDel);
+		free(uhead->data);
 		free(uhead);
 	}
 
 	Current1 = lhead;
-	if (lhead->next != NULL)
+	if (lhead->data  != NULL)
 	{
-		do {
-			fprintf(fp2, "%18s %d %ld %ld %ld", Current1->data->bName, Current1->data->Kind, Current1->data->Re, Current1->data->Af, Current1->data->tEnd);
-			Current2 = Current1->next;
-			free(Current1);
-			Current1 = Current2;
-		} while (Current1 != NULL);
+		if (lhead->next != NULL)
+		{
+			do {
+				fprintf(fp2, "%18s %d %f %f %lld",
+					Current1->data->bName, Current1->data->Kind, Current1->data->Re,
+					Current1->data->Af, Current1->data->tEnd);
+				Current2 = Current1->next;
+				free(Current1->data);
+				free(Current1);
+				Current1 = Current2;
+			} while (Current1 != NULL);
+		}
+		else
+		{
+			fprintf(fp2, "%18s %d %f %f %lld",
+			lhead->data->bName, lhead->data->Kind, lhead->data->Re,
+			lhead->data->Af, lhead->data->tEnd);
+			free(lhead->data);
+			free(lhead);
+		}
 	}
 	else
 	{
-		fprintf(fp2, "%18s %d %ld %ld %ld", lhead->data->bName, lhead->data->Kind, lhead->data->Re, lhead->data->Af, lhead->data->tEnd);
+		free(lhead->data);
 		free(lhead);
 	}
 
