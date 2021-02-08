@@ -17,109 +17,151 @@ void menu2(void)
 }
 
 //添加卡
-void adduser(Node1* uhead, Node1* uend)
+void adduser(Node1** auhead, Node1** auend)
 {
 	char lname[18], lpwd1[8],lpwd2[8];
-	int i;
-	Node1* user;
+	int ai;
+	Node1* a_user;
+	Node1* te_user;
 
-	user = (Node1*)malloc(sizeof(Node1));
+	a_user = (Node1*)malloc(sizeof(Node1));
+	if (a_user != NULL) 
+	{
+		a_user->data = (sUser*)malloc(sizeof(sUser));
+	}
+	else
+	{
+		printf("内存申请失败\n");
+		exit(EXIT_FAILURE);
+	}
 
-	printf("------添加卡------\n");
+	te_user = (*auhead);
 
-	do {
-		i = false;
-		printf("请输入卡号<长度为1~18>：");
-		s_gets(lname, 18);
-		for (Node1* i = uhead; i != NULL; i = i->next)
-		{
-			if (strcmp(lname, i->data->aName))
+	if (a_user->data != NULL)
+	{
+		printf("------添加卡------\n");
+		do {
+			ai = false;
+			printf("请输入卡号<长度为1~18>：");
+			s_gets(lname, 18);
+			if (te_user->data  != NULL)
 			{
-				continue;
+				for (; te_user != NULL; te_user = te_user->next)
+				{
+					if (strcmp(lname, te_user->data->aName))
+					{
+						continue;
+					}
+					else
+					{
+						ai = true;
+						printf("该卡号已被注册\n");
+						break;
+					}
+				}
+			}
+			else;
+		} while (ai);
+		printf("卡号申请成功\n");
+		printf("请设置密码：");
+		s_gets(lpwd1, 8);
+		printf("请确认密码：");
+		s_gets(lpwd2, 8);
+		if (strcmp(lpwd1, lpwd2))
+		{
+			do {
+				printf("前后输入不一致,请重新输入密码:");
+				s_gets(lpwd1, 8);
+				printf("请确认密码：");
+				s_gets(lpwd2, 8);
+			} while (strcmp(lpwd1, lpwd2)!=0);
+		}
+		else;
+
+		//补全添加卡的资料
+		for (int j = 0; j < 18; j++)
+		{
+			a_user->data->aName[j] = lname[j];
+		}
+		for (int j = 0; j < 8; j++)
+		{
+			a_user->data->aPwd[j] = lpwd1[j];
+		}
+		a_user->data ->tStart = time(NULL);
+		a_user->data->fBalance = 0;
+		a_user->data->tEnd = a_user->data->tStart + (long)31536000;
+		a_user->data->nStatus = 0;
+		a_user->data->tLast = time(NULL);
+		a_user->data->nUseCount = 0;
+		a_user->data->nDel = 0;
+
+		//将添加的卡加入链表尾
+		if ((*auhead) != NULL)
+		{
+			if ((*auhead)->data != NULL)
+			{
+				(*auend)->next = a_user;
+				a_user->next = NULL;
+				(*auend) = a_user;
 			}
 			else
 			{
-				i = true;
-				printf("该卡号已被注册\n");
-				break;
+				free((*auhead)->data);
+				free((*auhead));
+				(*auhead) = a_user;
+				a_user->next = NULL;
+				(*auend) = a_user;
 			}
 		}
-	} while (i);
-	printf("卡号申请成功\n");
-	printf("请设置密码：");
-	s_gets(lpwd1, 8);
-	printf("请确认密码：");
-	s_gets(lpwd2, 8);
-	if (strcmp(lpwd1, lpwd2))
-	{
-		do {
-			printf("前后输入不一致,请重新输入密码:");
-			s_gets(lpwd1, 8);
-			printf("请确认密码：");
-			s_gets(lpwd2, 8);
-		} while (strcmp(lpwd1, lpwd2)!=0);
-	}
-	else;
+		else
+		{
+			printf("内存申请失败\n");
+			exit(EXIT_FAILURE);
+		}
 
-	//补全添加卡的资料
-	for (int j = 0; j < 18; j++)
-	{
-		user->data->aName[j] = lname[j];
+		printf("开卡成功，有效期一年\n");
 	}
-	for (int j = 0; j < 8; j++)
+	else
 	{
-		user->data->aPwd[j] = lpwd1[j];
+		printf("内存申请失败\n");
+		exit(EXIT_FAILURE);
 	}
-	user->data ->tStart = time(NULL);
-	user->data->fBalance = 0;
-	user->data->tEnd = (long)user->data->tStart + (long)31536000;
-	user->data->nStatus = 0;
-	user->data->tLast = time(NULL);
-	user->data->nUseCount = 0;
-	user->data->nDel = 0;
-
-	//将添加的卡加入链表尾
-	uend->next = user;
-	user->next = NULL;
-	uend = user;
-
-	printf("开卡成功，有效期一年\n");
 }
 
 //查询卡
-void inquire(Node1* uhead)
+void inquire(Node1* i_uhead)
 {
 	int ct=0;            //记录查询结果个数
 	char dname[18];
-	Node1* current;
+	Node1* i_current;
 	Node1* n_current;
 
-	current = uhead;
+	i_current = i_uhead;
 
 	printf("------查询卡------\n");
 	printf("请输入要查询的卡号：");
 	s_gets(dname, 18);
 	printf("%20s %10s %12s %15s %20s\n", "卡号", "余额", "累计使用金额", "累计使用次数", "上次使用时间");
 	do {
-		if (strncmp(current->data->aName, dname, strlen(dname)) == 0)
+		if (strncmp(i_current->data->aName, dname, strlen(dname)) == 0)
 		{
-			printf("%20s ", current->data->aName);
-			printf("%10f ", current->data->fBalance);
-			printf("%12f ", current->data->fTotalUse);
-			printf("%15d ", current->data->nUseCount);
-			printf("%s\n", asctime(localtime(&(current->data->tLast))));
+			printf("%20s ", i_current->data->aName);
+			printf("%10f ", i_current->data->fBalance);
+			printf("%12f ", i_current->data->fTotalUse);
+			printf("%15d ", i_current->data->nUseCount);
+			printf("%s\n", asctime(localtime(&(i_current->data->tLast))));
 
-			n_current = current->next;
-			current = n_current;
+			n_current = i_current->next;
+			i_current = n_current;
 
 			ct++;
 		}
 		else
 		{
-			n_current = current->next;
-			current = n_current;
+			n_current = i_current->next;
+			i_current = n_current;
 		}
-	} while (current != NULL);
+	} while (i_current != NULL);
 
 	if (ct);
 	else
@@ -127,35 +169,38 @@ void inquire(Node1* uhead)
 }
 
 //上机
-Node1* login(Node1* uhead,int * soon)
+Node1* login(Node1* l_uhead,int * l_soon)
 {
 	char usingname[18];
 	char u_pwd[8];
-	Node1* current;
+	int sign;
+	Node1* l_current;
 	Node1* n_current;
 	Node1* on;
 
+	sign = 1;
 	on = NULL;
-	current = uhead;
+	l_current = l_uhead;
 
 	printf("------上机------\n");
 	printf("请输入卡号：");
 	s_gets(usingname,18);
 	do {
-		if (strcmp(usingname, current->data->aName))
+		if (strcmp(usingname, l_current->data->aName))
 		{
-			n_current = current->next;
-			current = n_current;
+			n_current = l_current->next;
+			l_current = n_current;
 		}
 		else
 		{
-			on = current;
+			on = l_current;
 			break;
 		}
-	} while (current != NULL);
-	if (current == NULL)
+	} while (l_current != NULL);
+	if (l_current == NULL)
 	{
 		printf("请检查你输入的卡号是否正确！\n（为避免非本人操作，将结束此次上机）\n");
+		sign = 0;
 	}
 	else
 	{
@@ -164,140 +209,225 @@ Node1* login(Node1* uhead,int * soon)
 		if (strcmp(u_pwd, on->data->aPwd))
 		{
 			printf("密码错误！\n（为避免非本人操作，本次操作结束）\n");
+			sign = 0;
 		}
 		else
 		{
 			on->data->nStatus = 1;
-			*soon = 0;
+			*l_soon = 0;
 			printf("上机成功——\n");
 		}
 	}
-
-	return on;
+	if (sign)
+	{
+		return on;
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 //下机
-void logout(Node1* on,int*soon,Node2*lend)
+void logout(Node1* l_on,int*lsoon,Node2*llend)
 {
 	printf("------下机------\n");
-	if (on->data->fBalance)
+	if (l_on->data->fBalance)
 	{
-		*soon = false;
-		on->data->tLast = time(NULL);
-		on->data->nUseCount++;
+		*lsoon = false;
+		l_on->data->tLast = time(NULL);
+		l_on->data->nUseCount++;
 	}
 	else
 	{
 		do {
 			printf("余额为零，请充值后将进行正常的下机操作：\n");
-			recharge(lend, on);
-		} while (on->data->fBalance == 0);
+			recharge(llend, l_on);
+		} while (l_on->data->fBalance == 0);
+
+		*lsoon = false;
+		l_on->data->tLast = time(NULL);
+		l_on->data->nUseCount++;
 	}
 }
 
 //充值
-void recharge(Node2* lend, Node1* on)
+void recharge(Node2** r_lend, Node1* r_on)
 {
-	Node2* current;
+	Node2* r_current;
 	long ch;
 	
-	current = (Node2*)malloc(sizeof(Node2));
-
-	printf("------充值------\n");
-	for (int i = 0; i < 18; i++)
+	r_current = (Node2*)malloc(sizeof(Node2));
+	if (r_current != NULL)
 	{
-		current->data->bName[i] = on->data->aName[i];
-	}
-	current->data->Kind = 1;
-	current->data->Re = on->data->fBalance;
-
-	printf("请输入充值金额：");
-	scanf("%ld", &ch);
-	current->data->Af = current->data->Re + ch;
-	on->data->fBalance += ch;
-
-	current->data->tEnd = time(NULL);
-
-	lend->next = current;
-	current->next = NULL;
-	lend = current;
-	free(current);
-}
-
-//退费
-void refund(Node2* lend, Node1* on)
-{
-	Node2* current;
-
-	current = (Node2*)malloc(sizeof(Node2));
-
-	printf("------退费------\n");
-	for (int i = 0; i < 18; i++)
-	{
-		current->data->bName[i] = on->data->aName[i];
-	}
-	current->data->Kind = 2;
-	current->data->Re = on->data->fBalance;
-
-	if (on->data->fBalance > 0)
-	{
-		printf("正在退费。。。\n");
-		printf("退费金额：%d\n", on->data->fBalance);
-		current->data->Af = 0;
-		on->data->fTotalUse += on->data->fBalance;
-		on->data->fBalance = 0;
+		 r_current->data= (lUser*)malloc(sizeof(lUser));
 	}
 	else
 	{
-		printf("余额为0！无法退费。\n");
-		current->data->Af = 0;
+		printf("内存申请失败\n");
+		exit(EXIT_FAILURE);
 	}
 
-	current->data->tEnd = time(NULL);
+	if (r_current->data != NULL)
+	{
+		printf("------充值------\n");
+		for (int i = 0; i < 18; i++)
+		{
+			r_current->data->bName[i] = r_on->data->aName[i];
+		}
+		r_current->data->Kind = 1;
+		r_current->data->Re = r_on->data->fBalance;
 
-	lend->next = current;
-	current->next = NULL;
-	lend = current;
-	free(current);
+		printf("请输入充值金额：");
+		if ((scanf("%ld", &ch)) == 1);
+		else
+		{
+			do {
+				printf("接收错误，请再次输入：");
+			} while ((scanf("%ld", &ch)) != 1);
+		}
+		r_current->data->Af = r_current->data->Re + ch;
+		r_on->data->fBalance += ch;
+	
+		r_current->data->tEnd = time(NULL);
+
+		(*r_lend)->next = r_current;
+		r_current->next = NULL;
+		(*r_lend) = r_current;
+	}
+	else
+	{
+		printf("内存申请失败\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+//退费
+void refund(Node2** re_lend, Node1* re_on)
+{
+	Node2* re_current;
+
+	re_current = (Node2*)malloc(sizeof(Node2));
+	if (re_current != NULL)
+	{
+		re_current->data = (lUser*)malloc(sizeof(lUser));
+	}
+	else
+	{
+		printf("内存申请失败\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if (re_current->data != NULL)
+	{
+		printf("------退费------\n");
+		for (int i = 0; i < 18; i++)
+		{
+			re_current->data->bName[i] = re_on->data->aName[i];
+		}
+		re_current->data->Kind = 2;
+		re_current->data->Re = re_on->data->fBalance;
+
+		if (re_on->data->fBalance > 0)
+		{
+			printf("正在退费。。。\n");
+			printf("退费金额：%f \n", re_on->data->fBalance);
+			re_current->data->Af = 0;
+			re_on->data->fTotalUse += re_on->data->fBalance;
+			re_on->data->fBalance = 0;
+		}
+		else
+		{
+			printf("余额为0！无法退费。\n");
+			re_current->data->Af = 0;
+		}
+
+		re_current->data->tEnd = time(NULL);
+
+		(*re_lend)->next = re_current;
+		re_current->next = NULL;
+		(*re_lend) = re_current;
+	}
+	else
+	{
+		printf("内存申请失败\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 //注销
-void dele(Node2* lend, Node1* on)
+void dele(Node2** d_lend, Node1* d_on)
 {
-	Node2* current;
+	Node2* d_current;
 
-	current = (Node2*)malloc(sizeof(Node2));
-
-	printf("------注销------\n");
-	for (int i = 0; i < 18; i++)
+	d_current = (Node2*)malloc(sizeof(Node2));
+	if (d_current != NULL)
 	{
-		current->data->bName[i] = on->data->aName[i];
+		d_current->data = (lUser*)malloc(sizeof(lUser));
 	}
-	current->data->Kind = 0;
-	current->data->Re = on->data->fBalance;
+	else
+	{
+		printf("内存申请失败\n");
+		exit(EXIT_FAILURE);
+	}
+	if (d_current->data != NULL)
+	{
+		printf("------注销------\n");
+		for (int i = 0; i < 18; i++)
+		{
+			d_current->data->bName[i] = d_on->data->aName[i];
+		}
+		d_current->data->Kind = 0;
+		d_current->data->Re = d_on->data->fBalance;
 
-	printf("卡号                退费金额\n");
-	printf("%18s  %f", on->data->aName, on->data->fBalance);
+		printf("卡号                退费金额\n");
+		printf("%18s  %f", d_on->data->aName, d_on->data->fBalance);
 
-	current->data->Af = 0;
-	current->data->tEnd = time(NULL);
+		d_current->data->Af = 0;
+		d_current->data->tEnd = time(NULL);
 
-	on->data->nStatus = 2;
-	on->data->nDel = 1;
+		d_on->data->nStatus = 2;
+		d_on->data->nDel = 1;
 
-	lend->next = current;
-	current->next = NULL;
-	lend = current;
-	free(current);
+		(*d_lend)->next = d_current;
+		d_current->next = NULL;
+		(*d_lend) = d_current;
+	}
+	else
+	{
+		printf("申请内存失败\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 //退出程序
-void quit(Node1* on, int* soon)
+void quit(Node1* q_on, int* q_soon)
 {
-	*soon = false;  
-	on->data->nStatus = 0;
-	on->data->tLast = time(NULL);
-	on->data->nUseCount++;
+	*q_soon = false;  
+	q_on->data->nStatus = 0;
+	q_on->data->tLast = time(NULL);
+	q_on->data->nUseCount++;
+}
+
+//字符串输入
+char* s_gets(char* st, int n)
+{
+	char* ret_val;
+	int i = 0;
+
+	ret_val = fgets(st, n, stdin);
+	if (ret_val)
+	{
+		while (st[i] != '\n' && st[i] != '\0')
+			i++;
+		if (st[i] == '\n')
+			st[i] = '\0';
+		else
+			while (getchar() != '\n')
+				continue;
+
+	}
+	return ret_val;
 }
 ```
 
